@@ -36,6 +36,16 @@
 "isa" = "PBXBuildFile";
 "fileRef" = "2E9D14D826A5F3FDC3E32EE5";
 };
+"C850480260BDCB4B9FEA878B" = {
+"isa" = "PBXFileReference";
+"lastKnownFileType" = "sourcecode.swift";
+"path" = "Sources/HomeCommand.swift";
+"sourceTree" = "<group>";
+};
+"B8F534039DE62431CCDAFE66" = {
+"isa" = "PBXBuildFile";
+"fileRef" = "C850480260BDCB4B9FEA878B";
+};
 "F17DC1FE31FB9D1F0A11BD13" = {
 "isa" = "PBXFileReference";
 "lastKnownFileType" = "sourcecode.swift";
@@ -64,6 +74,7 @@
 "5D95B436007A6941858CFA4E",
 "7C7EF6A42ACFC2F34DD9B80E",
 "2E9D14D826A5F3FDC3E32EE5",
+"C850480260BDCB4B9FEA878B",
 "F17DC1FE31FB9D1F0A11BD13",
 "05B3ABF2579A5EB66403CD78",
 "A8792157CB4F27FB949C035F"
@@ -77,6 +88,7 @@
 "CA8059B4AA21DE63B65E7942",
 "7FB2ABC6FEF2490DD3B41BE0",
 "012340571F614D32E8862AFB",
+"B8F534039DE62431CCDAFE66",
 "42F0ABED2BA44945A4DA3E94"
 );
 "runOnlyForDeploymentPostprocessing" = 0;
@@ -132,12 +144,12 @@
 "DEVELOPMENT_TEAM" = "2GFVXB3249";
 "CODE_SIGN_ENTITLEMENTS" = "Resources/AppleHome.entitlements";
 "GENERATE_INFOPLIST_FILE" = "YES";
-"INFOPLIST_KEY_NSHomeKitUsageDescription" = "Show your homes, rooms, accessories and scenes in the Apple Home module. This first version reads status only.";
+"INFOPLIST_KEY_NSHomeKitUsageDescription" = "Show your homes, rooms, accessories and scenes in the Apple Home module. Control only the lights, switches and outlets you explicitly allow.";
 "INFOPLIST_KEY_UIApplicationSceneManifest_Generation" = "YES";
 "INFOPLIST_KEY_UILaunchScreen_Generation" = "YES";
 "INFOPLIST_KEY_LSApplicationCategoryType" = "public.app-category.lifestyle";
-"CURRENT_PROJECT_VERSION" = "1";
-"MARKETING_VERSION" = "0.1.0";
+"CURRENT_PROJECT_VERSION" = "2";
+"MARKETING_VERSION" = "0.2.0";
 "ENABLE_HARDENED_RUNTIME" = "YES";
 "SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
 "SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
@@ -168,12 +180,12 @@
 "DEVELOPMENT_TEAM" = "2GFVXB3249";
 "CODE_SIGN_ENTITLEMENTS" = "Resources/AppleHome.entitlements";
 "GENERATE_INFOPLIST_FILE" = "YES";
-"INFOPLIST_KEY_NSHomeKitUsageDescription" = "Show your homes, rooms, accessories and scenes in the Apple Home module. This first version reads status only.";
+"INFOPLIST_KEY_NSHomeKitUsageDescription" = "Show your homes, rooms, accessories and scenes in the Apple Home module. Control only the lights, switches and outlets you explicitly allow.";
 "INFOPLIST_KEY_UIApplicationSceneManifest_Generation" = "YES";
 "INFOPLIST_KEY_UILaunchScreen_Generation" = "YES";
 "INFOPLIST_KEY_LSApplicationCategoryType" = "public.app-category.lifestyle";
-"CURRENT_PROJECT_VERSION" = "1";
-"MARKETING_VERSION" = "0.1.0";
+"CURRENT_PROJECT_VERSION" = "2";
+"MARKETING_VERSION" = "0.2.0";
 "ENABLE_HARDENED_RUNTIME" = "YES";
 "SWIFT_OPTIMIZATION_LEVEL" = "-O";
 };

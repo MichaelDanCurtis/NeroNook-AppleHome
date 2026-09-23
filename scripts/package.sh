@@ -13,4 +13,4 @@ app="$PWD/build/SignedDerivedData/Build/Products/Release-maccatalyst/Apple Home 
 codesign --verify --deep --strict "$app"
 python3 scripts/verify-provisioning.py "$app"
 ditto "$app" "$PWD/build/Apple Home Module.app"
-ditto -c -k --sequesterRsrc --keepParent "$PWD/build/Apple Home Module.app" "$PWD/build/NeroNook-AppleHome-0.1.0.zip"
+ditto -c -k --sequesterRsrc --keepParent "$PWD/build/Apple Home Module.app" "$PWD/build/NeroNook-AppleHome-0.2.0.zip"

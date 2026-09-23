@@ -8,7 +8,7 @@ struct AppleHomeView: View {
         VStack(spacing: 18) {
             HStack {
                 Image(systemName: "house.fill").font(.system(size: 28)).foregroundStyle(amber).padding(14).background(amber.opacity(0.12), in: RoundedRectangle(cornerRadius: 18))
-                VStack(alignment: .leading, spacing: 5) { Text(model.homeName).font(.title.bold()); Text(model.ready ? "Accessories and scenes · read only" : "Your Apple Home, close at hand").font(.callout).foregroundStyle(.secondary) }
+                VStack(alignment: .leading, spacing: 5) { Text(model.homeName).font(.title.bold()); Text(model.ready ? "Accessories and live home state" : "Your Apple Home, close at hand").font(.callout).foregroundStyle(.secondary) }
                 Spacer()
                 Button { model.refresh() } label: { Image(systemName: "arrow.clockwise") }.disabled(!model.ready || model.reading)
                 Button { model.settingsVisible = true } label: { Label("Settings", systemImage: "gearshape") }
@@ -50,7 +50,7 @@ struct AppleHomeView: View {
             VStack(alignment: .leading, spacing: 22) {
                 HStack { Text("Apple Home settings").font(.title2.bold()); Spacer(); Button("Done") { model.settingsVisible = false } }
                 Label("Apple Home permission", systemImage: "house.fill").font(.headline)
-                Text("This independent module uses Apple’s HomeKit permission to read your homes, rooms, accessories and scenes. It does not use Home Assistant or copy another app’s credentials.").foregroundStyle(.secondary)
+                Text("This independent module uses Apple’s HomeKit permission to read your homes, rooms, accessories and scenes, and control devices you allow. It does not use Home Assistant or copy another app’s credentials.").foregroundStyle(.secondary)
                 if model.enabled { Button("Pause Apple Home access") { model.stop() } }
                 else { Button("Enable Apple Home access") { model.start() }.buttonStyle(.borderedProminent) }
                 Text(model.status).font(.callout)
@@ -58,8 +58,16 @@ struct AppleHomeView: View {
                     Picker("Home", selection: Binding(get: { model.selectedHome }, set: { model.chooseHome($0) })) { ForEach(model.homes, id: \.id) { Text($0.name).tag($0.id) } }
                 }
                 Divider()
-                Text("First release: read-only inventory").font(.headline)
-                Text("Favorites are local to this plugin. Device controls follow after live inventory is verified. Pausing stops this module’s reads; revoke its Home permission in System Settings to remove system authorization.").foregroundStyle(.secondary)
+                Text("Allowed power controls").font(.headline)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(model.accessories.filter { model.powerCharacteristic($0.id) != nil }) { accessory in
+                            Toggle(isOn: Binding(get: { model.isPowerAllowed(accessory.id) }, set: { model.setPowerAllowed(accessory.id, $0) })) { Text(accessory.name + " · " + accessory.room) }
+                        }
+                        if !model.accessories.contains(where: { model.powerCharacteristic($0.id) != nil }) { Text("No compatible light, switch or outlet controls are available in this home.").foregroundStyle(.secondary) }
+                    }
+                }.frame(maxHeight: 170)
+                Text("Favorite devices and switch allowed lights, switches or outlets directly in the Nook. Commands require a reachable device, a fresh reading and confirmation. Scenes, doors, locks and blinds are read only. Favorites and allowed controls are local to this plugin. Pausing stops this module’s reads; revoke its Home permission in System Settings to remove system authorization.").foregroundStyle(.secondary)
                 if !model.notice.isEmpty { Text(model.notice).font(.caption).foregroundStyle(.orange) }
                 Spacer()
             }.padding(28).frame(minWidth: 540, minHeight: 420).presentationDetents([.large]).preferredColorScheme(.dark).tint(amber)

@@ -1,14 +1,16 @@
 {
   "id": "cafe.nero.plugin.applehome",
   "name": "Apple Home",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "summary": "Your Apple Home rooms, favorite accessories and scenes in the Nook.",
   "capabilities": [
     "Requests Apple Home access through the system HomeKit permission",
     "Reads homes, rooms, accessories, scenes and supported characteristic values",
     "Stores its own chosen home and favorite accessory identifiers",
     "Publishes read-only status through the generic plugin SDK",
-    "Keeps Apple Home independent from Home Assistant and NeroNook core"
+    "Keeps Apple Home independent from Home Assistant and NeroNook core",
+    "Sends reviewed on/off commands only to individually allowed lights, switches and outlets, then checks their state"
   ],
-  "apiVersion": 1
+  "apiVersion": 1,
+  "launchMode": "application"
 }
