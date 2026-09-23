@@ -12,5 +12,9 @@
     "Sends reviewed on/off commands only to individually allowed lights, switches and outlets, then checks their state"
   ],
   "apiVersion": 1,
-  "launchMode": "application"
+  "launchMode": "application",
+  "icon": {
+    "symbol": "homekit",
+    "color": "FFBD70"
+  }
 }
