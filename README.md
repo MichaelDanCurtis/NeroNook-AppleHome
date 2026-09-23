@@ -1,6 +1,6 @@
 # Apple Home for NeroNook
 
-Independent Mac Catalyst plugin, **0.2.0**. Public HomeKit supplies homes, rooms, accessories, scenes and current readings. Favorite accessories and supported on/off controls live directly in the Nook. Home Assistant and the Apple Home desktop app are not dependencies.
+Independent Mac Catalyst plugin, **0.2.1**. Public HomeKit supplies homes, rooms, accessories, scenes and current readings. Favorite accessories and supported on/off controls live directly in the Nook. Home Assistant and the Apple Home desktop app are not dependencies.
 
 ## Interface
 
@@ -20,11 +20,11 @@ python3 scripts/test-protocol.py
 python3 scripts/test-protocol.py --cards
 ```
 
-Packaging requires a signed-in Xcode developer account and matching HomeKit provisioning for this bundle identity. It checks signature, profile identity, HomeKit entitlement, sandbox and expiry before producing `build/Apple Home Module.app` and `build/NeroNook-AppleHome-0.2.0.zip`. Set `NERONOOK_APPLE_TEAM` for an explicitly chosen development team. Register the development Mac through Xcode if requested. Never strip entitlements or ad-hoc-sign an installable release to bypass provisioning.
+Packaging requires a signed-in Xcode developer account and matching HomeKit provisioning for this bundle identity. It checks signature, profile identity, HomeKit entitlement, sandbox and expiry before producing `build/Apple Home Module.app` and `build/NeroNook-AppleHome-0.2.1.zip`. Set `NERONOOK_APPLE_TEAM` for an explicitly chosen development team. Register the development Mac through Xcode if requested. Never strip entitlements or ad-hoc-sign an installable release to bypass provisioning.
 
 Install using **NeroNook 0.14 or newer → Settings → Modules → Install or Update Plugin**. The manifest opts into the SDK's generic application launch mode. LaunchServices starts a separate application with its own privacy identity; a one-session authenticated loopback connection carries only the usual SDK protocol. No HomeKit permission or entitlement is added to NeroNook. Older hosts receive an update-required state and cannot initialize HomeKit from their child-process path.
 
-The model starts before a window is shown. While hosted, an activity assertion keeps the user-enabled integration responsive but allows normal system sleep; the timer runs in common main-run-loop modes. Host shutdown/disable ends the connection and process. Settings can be opened separately on request.
+The model starts before a window is shown. While hosted, an activity assertion keeps the user-enabled integration responsive but allows normal system sleep; the timer runs in common main-run-loop modes. Host shutdown/disable ends the connection and process. Settings opens as a scrollable page in the plugin window, with Done returning to the dashboard. LaunchServices owns hidden startup; the plugin never hides the UIKit content window on first appearance. Window requests select a content scene and request a new scene if none remains.
 
 ## Data and validation
 

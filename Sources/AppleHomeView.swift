@@ -5,6 +5,12 @@ private let amber = Color(red: 0.97, green: 0.69, blue: 0.31)
 struct AppleHomeView: View {
     @ObservedObject var model: AppleHomeModel
     var body: some View {
+        Group {
+            if model.settingsVisible { settings }
+            else { dashboard }
+        }.preferredColorScheme(.dark).tint(amber)
+    }
+    private var dashboard: some View {
         VStack(spacing: 18) {
             HStack {
                 Image(systemName: "house.fill").font(.system(size: 28)).foregroundStyle(amber).padding(14).background(amber.opacity(0.12), in: RoundedRectangle(cornerRadius: 18))
@@ -46,7 +52,9 @@ struct AppleHomeView: View {
             }
             HStack { Text(model.status).font(.caption).foregroundStyle(.secondary).lineLimit(2); Spacer() }
         }.padding(24).background(Color(red: 0.075, green: 0.073, blue: 0.087)).preferredColorScheme(.dark).tint(amber)
-        .sheet(isPresented: $model.settingsVisible) {
+    }
+    private var settings: some View {
+        ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 HStack { Text("Apple Home settings").font(.title2.bold()); Spacer(); Button("Done") { model.settingsVisible = false } }
                 Label("Apple Home permission", systemImage: "house.fill").font(.headline)
@@ -70,8 +78,8 @@ struct AppleHomeView: View {
                 Text("Favorite devices and switch allowed lights, switches or outlets directly in the Nook. Commands require a reachable device, a fresh reading and confirmation. Scenes, doors, locks and blinds are read only. Favorites and allowed controls are local to this plugin. Pausing stops this module’s reads; revoke its Home permission in System Settings to remove system authorization.").foregroundStyle(.secondary)
                 if !model.notice.isEmpty { Text(model.notice).font(.caption).foregroundStyle(.orange) }
                 Spacer()
-            }.padding(28).frame(minWidth: 540, minHeight: 420).presentationDetents([.large]).preferredColorScheme(.dark).tint(amber)
-        }
+            }.padding(28).frame(maxWidth: 760, alignment: .leading)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Color(red: 0.075, green: 0.073, blue: 0.087))
     }
 }
 private extension View {

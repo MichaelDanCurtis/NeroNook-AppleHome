@@ -1,6 +1,16 @@
 # Apple Home module status
 
-September 22, 2026 · **0.2.0 installed development preview**
+September 23, 2026 · **0.2.1 installed development preview**
+
+## Blank-window fix
+
+The owner reported a white native frame with no contents. The first-appearance callback hid every UIKit window in hosted mode, despite LaunchServices already launching the application hidden. Removed that duplicate hiding behavior. Explicit window requests now select a normal content scene rather than an arbitrary Catalyst helper/menu scene and request a new scene if needed. Settings now renders as a scrollable page in the main window: the old sheet path produced an inaccessible/nonvisible settings presentation during this acceptance run. Done returns to the dashboard.
+
+The independently provisioned 0.2.1 package was installed through NeroNook's normal review. Five reading/command tests and both real Catalyst protocol fixtures pass; strict signature and HomeKit provisioning checks pass. Native dashboard and Settings were visually inspected with Home and the saved Nanoleaf favorite intact. Host Plugin Settings opens the populated settings page; Done returns to the dashboard. A plugin restart returns to the populated Home dashboard. No Home selection, favorites, authorization or allowed-control settings were changed, and no device command was sent. Nanoleaf still reports Unreachable; that is separate from the fixed window rendering.
+
+Full close/reopen via normal Dock/Finder activation and broader macOS window restoration remain additional acceptance; the automated window inspector can reopen a closed scene, so it is not proof of that exact user path. Host code was not changed.
+
+## Previous acceptance
 
 | Layer | Evidence |
 | --- | --- |

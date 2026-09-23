@@ -10,6 +10,6 @@ import UIKit
         _model = StateObject(wrappedValue: model)
     }
     var body: some Scene {
-        WindowGroup { AppleHomeView(model: model).frame(minWidth: 760, minHeight: 500).onAppear { model.windowAppeared() } }
+        WindowGroup { AppleHomeView(model: model).frame(minWidth: 760, minHeight: 500) }
     }
 }

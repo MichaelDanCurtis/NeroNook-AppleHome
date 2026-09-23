@@ -47,7 +47,6 @@ struct AccessoryCard: Identifiable {
     private var registeredNotifications = Set<UUID>()
     private var input: PluginLines = .init()
     private let applicationChannel = PluginApplicationChannel()
-    private var initialAppearance = true
     private var readings = ReadingTracker()
     private var characteristics: [UUID: HMCharacteristic] = [:]
     let hosted = CommandLine.arguments.contains("--neronook-plugin")
@@ -99,14 +98,21 @@ struct AccessoryCard: Identifiable {
         if let timer { RunLoop.main.add(timer, forMode: .common) }
         if enabled && !protocolTest { start() }
     }
-    func windowAppeared() {
-        guard initialAppearance else { return }; initialAppearance = false
-        if hosted { for scene in UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }) { for window in scene.windows { window.isHidden = true } } }
-    }
     func showSettings() { settingsVisible = true; showWindow() }
     func showWindow() {
-        for scene in UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }) { for window in scene.windows { window.makeKeyAndVisible() } }
-        if let scene = UIApplication.shared.connectedScenes.first { UIApplication.shared.requestSceneSessionActivation(scene.session, userActivity: nil, options: nil, errorHandler: nil) }
+        // LaunchServices owns hidden startup. Hiding UIKit content here leaves
+        // Catalyst's native frame blank when the user later opens the app.
+        // Ignore Catalyst's menu/helper scenes and reopen a content scene only.
+        let scene = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+            .first { $0.windows.contains { $0.rootViewController != nil && $0.windowLevel == .normal } }
+        if let scene {
+            for window in scene.windows where window.rootViewController != nil && window.windowLevel == .normal {
+                window.makeKeyAndVisible()
+            }
+        }
+        UIApplication.shared.requestSceneSessionActivation(scene?.session, userActivity: nil, options: nil) { [weak self] _ in
+            Task { @MainActor in self?.notice = "The home window could not open. Try opening Apple Home settings again." }
+        }
     }
     func start() {
         guard manager == nil, !protocolTest else { return }

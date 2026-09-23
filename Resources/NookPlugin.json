@@ -1,7 +1,7 @@
 {
   "id": "cafe.nero.plugin.applehome",
   "name": "Apple Home",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "summary": "Your Apple Home rooms, favorite accessories and scenes in the Nook.",
   "capabilities": [
     "Requests Apple Home access through the system HomeKit permission",
