@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import NookPluginSDK
 
 @main struct AppleHomeApp: App {
     @StateObject private var model: AppleHomeModel
@@ -10,6 +11,6 @@ import UIKit
         _model = StateObject(wrappedValue: model)
     }
     var body: some Scene {
-        WindowGroup { AppleHomeView(model: model).frame(minWidth: 760, minHeight: 500) }
+        WindowGroup { AppleHomeView(model: model).pluginThemed().frame(minWidth: 760, minHeight: 500) }
     }
 }

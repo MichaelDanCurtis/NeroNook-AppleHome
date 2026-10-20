@@ -216,13 +216,13 @@ struct AccessoryCard: Identifiable {
     private func receive(_ m: PluginMessage) {
         guard m.pluginID == appleHomePluginID else { exit(1) }
         if session == nil {
-            guard m.type == "hello" else { exit(1) }; session = m.session
+            guard m.type == "hello" else { exit(1) }; session = m.session; PluginAppearanceStore.shared.beginSession(pluginID:appleHomePluginID,session:m.session)
             hostCards = m.features?.contains("control-cards-v1") == true
-            emit("ready", features: ["actions-v1", "panels-v1", "dashboard-v1", "diagrams-v1", "control-cards-v1"])
+            emit("ready", features: ["appearance-v1", "actions-v1", "panels-v1", "dashboard-v1", "diagrams-v1", "control-cards-v1"])
             send(.init(.register, registration: .init(actions: [.init("read_status", title: "Read Apple Home status", output: .init([.init("connected", .boolean), .init("message", .string)]))], channels: [.init("status", title: "Apple Home status", kind: .state, schema: .init([.init("connected", .boolean), .init("message", .string)]))])))
             publish(); return
         }
-        guard m.session == session else { exit(1) }
+        guard m.session == session else { exit(1) }; if m.type == "appearance" { _ = PluginAppearanceStore.shared.receive(m); return }
         if m.type == "action" { switch m.action { case "configure": showSettings(); case "home": showWindow(); case "refresh": refresh(); default:
             if let action = m.action, let id = inlineStars[action], accessories.contains(where: { $0.id == id }) { star(id) }
             else if let action = m.action, let intent = inlinePower[action] { sendPower(intent) }
@@ -295,7 +295,7 @@ struct AccessoryCard: Identifiable {
             })
         }
         let message = notice.isEmpty ? status : notice
-        var snapshot = PluginSnapshot(title: "Apple Home", status: String(message.prefix(300)), activity: String(message.prefix(100)), actions: hostCards ? [.init("refresh", "Refresh", enabled: ready && !reading && !commandBusy, symbol: "arrow.clockwise")] : [.init("home", "Open home", symbol: "house"), .init("refresh", "Refresh", enabled: ready && !reading, symbol: "arrow.clockwise")], badge: commandBusy ? "Working…" : ready ? "Connected" : "Setup needed", panels: panels)
+        var snapshot = PluginSnapshot(title: "Apple Home", status: String(message.prefix(300)), activity: String(message.prefix(100)), actions: hostCards ? [.init("refresh", "Refresh", enabled: ready && !reading && !commandBusy, symbol: "arrow.clockwise", placement: .menu)] : [.init("home", "Open home", symbol: "house", placement: .menu), .init("refresh", "Refresh", enabled: ready && !reading, symbol: "arrow.clockwise", placement: .menu)], badge: commandBusy ? "Working…" : ready ? "Connected" : "Setup needed", panels: panels)
         while ((try? PluginMessage(type: "snapshot", pluginID: appleHomePluginID, session: session, snapshot: snapshot).encoded().count) ?? Int.max) > 120 * 1024 {
             guard let index = snapshot.panels?.indices.max(by: { (snapshot.panels?[$0].cards?.count ?? 0) < (snapshot.panels?[$1].cards?.count ?? 0) }), snapshot.panels?[index].cards?.isEmpty == false else { return }
             snapshot.panels?[index].cards?.removeLast()

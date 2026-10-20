@@ -1,6 +1,8 @@
+**October 18 · local 0.2.3 installed:** shared glass, paired Light/Dark, independent bundled presence/particle artwork and component motion. Saved connection/settings remain scoped to this plugin. [Rollout evidence and limits](../NeroNook/reports/redesign-ember-2026-10-18/README.md). No public release.
+
 # Apple Home for NeroNook
 
-Independent Mac Catalyst plugin, **0.2.1**. Public HomeKit supplies homes, rooms, accessories, scenes and current readings. Favorite accessories and supported on/off controls live directly in the Nook. Home Assistant and the Apple Home desktop app are not dependencies.
+Independent Mac Catalyst plugin, **0.2.2**. Public HomeKit supplies homes, rooms, accessories, scenes and current readings. Favorite accessories and supported on/off controls live directly in the Nook. Home Assistant and the Apple Home desktop app are not dependencies.
 
 ## Interface
 
@@ -20,7 +22,7 @@ python3 scripts/test-protocol.py
 python3 scripts/test-protocol.py --cards
 ```
 
-Packaging requires a signed-in Xcode developer account and matching HomeKit provisioning for this bundle identity. It checks signature, profile identity, HomeKit entitlement, sandbox and expiry before producing `build/Apple Home Module.app` and `build/NeroNook-AppleHome-0.2.1.zip`. Set `NERONOOK_APPLE_TEAM` for an explicitly chosen development team. Register the development Mac through Xcode if requested. Never strip entitlements or ad-hoc-sign an installable release to bypass provisioning.
+Packaging requires a signed-in Xcode developer account and matching HomeKit provisioning for this bundle identity. It checks signature, profile identity, HomeKit entitlement, sandbox and expiry before producing `build/Apple Home Module.app` and `build/NeroNook-AppleHome-0.2.2.zip`. Set `NERONOOK_APPLE_TEAM` for an explicitly chosen development team. Register the development Mac through Xcode if requested. Never strip entitlements or ad-hoc-sign an installable release to bypass provisioning.
 
 Install using **NeroNook 0.14 or newer → Settings → Modules → Install or Update Plugin**. The manifest opts into the SDK's generic application launch mode. LaunchServices starts a separate application with its own privacy identity; a one-session authenticated loopback connection carries only the usual SDK protocol. No HomeKit permission or entitlement is added to NeroNook. Older hosts receive an update-required state and cannot initialize HomeKit from their child-process path.
 

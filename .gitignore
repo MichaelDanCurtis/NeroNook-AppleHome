@@ -5,3 +5,14 @@ xcuserdata/
 
 .build/
 .swiftpm/
+
+reports/
+.serena/
+node_modules/
+__pycache__/
+*.app/
+*.dSYM/
+*.xcarchive/
+.env
+.env.*
+!.env.example
