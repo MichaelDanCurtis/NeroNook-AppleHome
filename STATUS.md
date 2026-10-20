@@ -1,3 +1,9 @@
+# October 15, 2026 · 0.2.2 installed development preview
+
+The independent Catalyst target now sets boolean `LSUIElement = true`. HomeKit identity, provisioning, entitlements, views and device behavior are unchanged. The signed/provisioned package was installed through NeroNook’s normal update review. The previous 0.2.1 executable remains in the host’s retained versions.
+
+Live verification: the module is Running, reports accessory activation policy (1), opens its populated settings, returns to the Home dashboard with Done, and remains Dock-hidden after activation and window close. The saved Home, one accessory, favorite and per-monitor placement were preserved. No device command was sent. Five reading/command tests, both legacy/control-card Catalyst protocol fixtures, strict signature and provisioning checks pass. This is a development build for this Mac; public distribution remains separate.
+
 # Apple Home module status
 
 September 23, 2026 · **0.2.1 installed development preview**
